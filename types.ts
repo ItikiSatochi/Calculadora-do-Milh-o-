@@ -1,5 +1,8 @@
 
+export type ToolType = 'MILLION' | 'COMPOUND';
 export type CalculationMode = 'TIME_TO_MILLION' | 'CONTRIBUTION_FOR_MILLION';
+export type PeriodType = 'MONTHS' | 'YEARS';
+export type RateType = 'MONTHLY' | 'ANNUAL';
 
 export interface FinancialInputs {
   initialValue: number | string;
@@ -7,6 +10,10 @@ export interface FinancialInputs {
   annualInterestRate: number | string;
   years: number | string;
   mode: CalculationMode;
+  // Novos campos para Juros Compostos
+  periodType: PeriodType;
+  rateType: RateType;
+  periodValue: number | string;
 }
 
 export interface YearData {
@@ -23,6 +30,7 @@ export interface MonthData {
   total: number;
   invested: number;
   interest: number;
+  interestThisMonth: number;
 }
 
 export interface CalculationResult {
@@ -33,5 +41,5 @@ export interface CalculationResult {
   yearlyBreakdown: YearData[];
   targetReachedInMonths: number;
   requiredMonthlyAporte?: number;
-  powerFactor: number; // Percentage of interest over invested
+  powerFactor: number;
 }

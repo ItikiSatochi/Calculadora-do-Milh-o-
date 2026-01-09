@@ -42,12 +42,12 @@ const InvestmentChart: React.FC<Props> = ({ data }) => {
   const sampledData = data.filter((_, i) => data.length > 240 ? i % 12 === 0 : (data.length > 120 ? i % 6 === 0 : i % 3 === 0));
 
   return (
-    <div className="h-[380px] w-full">
+    <div className="h-[300px] md:h-[400px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={sampledData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+        <AreaChart data={sampledData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#10b981" stopOpacity={0.25}/>
+              <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
               <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
             </linearGradient>
           </defs>
@@ -67,24 +67,25 @@ const InvestmentChart: React.FC<Props> = ({ data }) => {
             tickFormatter={(val) => `R$ ${val/1000}K`}
             axisLine={false}
             tickLine={false}
-            dx={-5}
           />
           <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(16,185,129,0.2)', strokeWidth: 2 }} />
           <Legend 
-            wrapperStyle={{ paddingTop: '30px', fontSize: '9px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.1em' }} 
+            verticalAlign="top" 
+            align="right"
+            wrapperStyle={{ paddingBottom: '20px', fontSize: '8px', fontWeight: 'black', textTransform: 'uppercase', letterSpacing: '0.1em' }} 
             iconType="circle"
           />
           <Area 
-            name="Patrimônio Acumulado"
+            name="Patrimônio Total"
             type="monotone" 
             dataKey="total" 
             stroke="#10b981" 
-            strokeWidth={4}
+            strokeWidth={3}
             fill="url(#colorTotal)" 
             animationDuration={1500}
           />
           <Area 
-            name="Capital Inicial + Aportes"
+            name="Capital Investido"
             type="monotone" 
             dataKey="invested" 
             stroke="#334155" 
