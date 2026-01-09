@@ -4,14 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rumo ao Milhão Pro</title>
+    <title>Millennium Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
+            background-color: #020617; /* Slate 950 */
+            margin: 0;
+            overflow-x: hidden;
         }
+        /* Ajuste para evitar o erro de 'process is not defined' caso o bundler não o substitua */
+        <script>
+          window.process = { env: { API_KEY: "" } };
+        </script>
     </style>
 <script type="importmap">
 {
@@ -27,5 +33,7 @@
 </head>
 <body class="text-slate-200 antialiased">
     <div id="root"></div>
+    <!-- CRITICAL: Carrega o ponto de entrada da aplicação -->
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>
