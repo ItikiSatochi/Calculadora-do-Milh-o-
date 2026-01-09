@@ -15,6 +15,7 @@ import { formatCurrency } from '../utils';
 
 interface Props {
   data: MonthData[];
+  mainColor?: string;
 }
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -24,7 +25,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         <p className="text-slate-500 text-[9px] font-black uppercase tracking-widest mb-3">Mês de Evolução: {label}</p>
         <div className="space-y-2 text-xs">
           <div className="flex justify-between gap-10 items-center">
-            <span className="font-bold text-emerald-400">Total:</span>
+            <span className="font-bold text-white">Total:</span>
             <span className="font-mono font-bold text-white">{formatCurrency(payload[0].value)}</span>
           </div>
           <div className="flex justify-between gap-10 items-center border-t border-white/5 pt-2">
@@ -38,7 +39,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-const InvestmentChart: React.FC<Props> = ({ data }) => {
+const InvestmentChart: React.FC<Props> = ({ data, mainColor = '#10b981' }) => {
   const sampledData = data.filter((_, i) => data.length > 240 ? i % 12 === 0 : (data.length > 120 ? i % 6 === 0 : i % 3 === 0));
 
   return (
@@ -47,8 +48,8 @@ const InvestmentChart: React.FC<Props> = ({ data }) => {
         <AreaChart data={sampledData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-              <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+              <stop offset="5%" stopColor={mainColor} stopOpacity={0.3}/>
+              <stop offset="95%" stopColor={mainColor} stopOpacity={0}/>
             </linearGradient>
           </defs>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.03)" />
@@ -68,7 +69,7 @@ const InvestmentChart: React.FC<Props> = ({ data }) => {
             axisLine={false}
             tickLine={false}
           />
-          <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(16,185,129,0.2)', strokeWidth: 2 }} />
+          <Tooltip content={<CustomTooltip />} cursor={{ stroke: `${mainColor}33`, strokeWidth: 2 }} />
           <Legend 
             verticalAlign="top" 
             align="right"
@@ -79,7 +80,7 @@ const InvestmentChart: React.FC<Props> = ({ data }) => {
             name="Patrimônio Total"
             type="monotone" 
             dataKey="total" 
-            stroke="#10b981" 
+            stroke={mainColor} 
             strokeWidth={3}
             fill="url(#colorTotal)" 
             animationDuration={1500}

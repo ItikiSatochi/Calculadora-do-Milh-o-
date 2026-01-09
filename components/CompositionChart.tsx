@@ -6,12 +6,13 @@ import { formatCurrency } from '../utils';
 interface Props {
   invested: number;
   interest: number;
+  mainColor?: string;
 }
 
-const CompositionChart: React.FC<Props> = ({ invested, interest }) => {
+const CompositionChart: React.FC<Props> = ({ invested, interest, mainColor = '#10b981' }) => {
   const data = [
-    { name: 'Aportes', value: invested, color: '#1e293b' }, // Slate 800
-    { name: 'Juros', value: interest, color: '#10b981' },   // Emerald 500
+    { name: 'Aportes', value: invested, color: '#1e293b' },
+    { name: 'Juros', value: interest, color: mainColor },
   ];
 
   return (
@@ -47,7 +48,10 @@ const CompositionChart: React.FC<Props> = ({ invested, interest }) => {
       <div className="flex gap-8 mt-6">
          {data.map(d => (
            <div key={d.name} className="flex items-center gap-3">
-              <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color, boxShadow: d.name === 'Juros' ? '0 0 10px rgba(16,185,129,0.4)' : 'none' }}></div>
+              <div className="w-2.5 h-2.5 rounded-full" style={{ 
+                backgroundColor: d.color, 
+                boxShadow: d.name === 'Juros' ? `0 0 10px ${mainColor}66` : 'none' 
+              }}></div>
               <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">{d.name}</span>
            </div>
          ))}
