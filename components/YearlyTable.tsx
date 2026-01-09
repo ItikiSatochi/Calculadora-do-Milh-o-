@@ -13,31 +13,53 @@ const YearlyTable: React.FC<Props> = ({ data, themeColor = '#10b981' }) => {
   }
   
   return (
-    <div className="overflow-x-auto bg-slate-900/50 border border-slate-800 rounded-2xl mt-6">
-      <table className="w-full text-sm text-left text-slate-400">
-        <thead className="text-[10px] text-slate-400 uppercase bg-slate-800/50">
-          <tr>
-            <th scope="col" className="px-6 py-4 tracking-wider">Ano</th>
-            <th scope="col" className="px-6 py-4 text-right tracking-wider">Aportado no Ano</th>
-            <th scope="col" className="px-6 py-4 text-right tracking-wider">Juros no Ano</th>
-            <th scope="col" className="px-6 py-4 text-right tracking-wider">Total Investido</th>
-            <th scope="col" className="px-6 py-4 text-right tracking-wider">Total Juros</th>
-            <th scope="col" className="px-6 py-4 text-right font-bold text-white tracking-wider">Patrimônio Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((yearData) => (
-            <tr key={yearData.year} className="border-b border-slate-800 hover:bg-slate-800/40 transition-colors">
-              <td className="px-6 py-4 font-bold text-white whitespace-nowrap">{yearData.year}</td>
-              <td className="px-6 py-4 text-right font-mono">{formatCurrency(yearData.annualContribution)}</td>
-              <td className="px-6 py-4 text-right font-mono" style={{ color: themeColor }}>{formatCurrency(yearData.annualInterest)}</td>
-              <td className="px-6 py-4 text-right font-mono">{formatCurrency(yearData.totalInvested)}</td>
-              <td className="px-6 py-4 text-right font-mono" style={{ color: themeColor }}>{formatCurrency(yearData.totalInterest)}</td>
-              <td className="px-6 py-4 font-bold font-mono text-right" style={{ color: themeColor }}>{formatCurrency(yearData.totalAccumulated)}</td>
+    <div className="relative overflow-hidden bg-slate-900/40 border border-slate-800 rounded-[2rem] mt-6 shadow-inner">
+      <div className="max-h-[500px] overflow-y-auto overflow-x-auto custom-scrollbar">
+        <table className="w-full text-xs text-left text-slate-400 border-collapse">
+          <thead className="sticky top-0 z-20 text-[10px] text-slate-400 uppercase bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+            <tr>
+              <th scope="col" className="px-4 py-5 text-center font-black tracking-widest min-w-[60px]">Ano</th>
+              <th scope="col" className="px-4 py-5 text-right font-black tracking-widest min-w-[140px]">Aportado</th>
+              <th scope="col" className="px-4 py-5 text-right font-black tracking-widest min-w-[140px]">Juros/Ano</th>
+              <th scope="col" className="px-4 py-5 text-right font-black tracking-widest min-w-[140px]">Total Investido</th>
+              <th scope="col" className="px-4 py-5 text-right font-black tracking-widest min-w-[140px]">Total Juros</th>
+              <th scope="col" className="px-6 py-5 text-right font-black tracking-widest min-w-[160px] text-white bg-slate-800/20">Patrimônio</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-slate-800/50">
+            {data.map((yearData, index) => (
+              <tr 
+                key={yearData.year} 
+                className={`transition-colors duration-150 ${index % 2 === 0 ? 'bg-transparent' : 'bg-slate-800/20'} hover:bg-slate-800/50`}
+              >
+                <td className="px-4 py-4 text-center font-bold text-white border-r border-slate-800/30">
+                  {yearData.year}
+                </td>
+                <td className="px-4 py-4 text-right font-mono opacity-80">
+                  {formatCurrency(yearData.annualContribution)}
+                </td>
+                <td className="px-4 py-4 text-right font-mono font-bold" style={{ color: themeColor }}>
+                  {formatCurrency(yearData.annualInterest)}
+                </td>
+                <td className="px-4 py-4 text-right font-mono opacity-80">
+                  {formatCurrency(yearData.totalInvested)}
+                </td>
+                <td className="px-4 py-4 text-right font-mono opacity-80">
+                  {formatCurrency(yearData.totalInterest)}
+                </td>
+                <td className="px-6 py-4 font-black font-mono text-right bg-slate-800/10" style={{ color: themeColor }}>
+                  {formatCurrency(yearData.totalAccumulated)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      {/* Indicador de rolagem para tabelas longas */}
+      {data.length > 10 && (
+        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none opacity-50"></div>
+      )}
     </div>
   );
 };

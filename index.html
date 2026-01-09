@@ -16,6 +16,7 @@
         /* Custom scrollbar for better aesthetics */
         ::-webkit-scrollbar {
             width: 8px;
+            height: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #020617;
@@ -27,6 +28,16 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #334155;
         }
+        
+        /* Scrollbar específica para containers de dados */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+
         @keyframes fade-in {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
