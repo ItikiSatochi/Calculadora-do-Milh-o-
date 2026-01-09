@@ -36,6 +36,14 @@ const InfoCard = ({ icon, title, description }: { icon: React.ReactNode; title: 
   </div>
 );
 
+const WelcomeCard = ({ icon, title, description, themeColor }: { icon: React.ReactNode; title: string; description: string; themeColor: string }) => (
+  <div className="bg-slate-900/30 border border-slate-800/50 p-6 rounded-3xl backdrop-blur-md flex flex-col items-center text-center group hover:border-slate-700 transition-all">
+    <div className={`mb-4 ${themeColor} opacity-50 group-hover:opacity-100 transition-opacity`}>{icon}</div>
+    <h4 className="text-white font-black text-xs uppercase tracking-widest mb-2">{title}</h4>
+    <p className="text-[10px] text-slate-500 leading-relaxed">{description}</p>
+  </div>
+);
+
 const inputBaseStyle = "w-full bg-slate-800/50 border border-slate-700 rounded-lg p-3 text-white font-bold text-base focus:ring-2 outline-none transition duration-300";
 
 export const App: React.FC = () => {
@@ -205,12 +213,35 @@ export const App: React.FC = () => {
           </div>
         </section>
 
-        {/* RESULTS SECTION */}
+        {/* RESULTS SECTION / PLACEHOLDER */}
         <div id="results-section" className="min-h-[100px] mb-24 scroll-mt-20">
           {isLoading && (
             <div className="flex flex-col justify-center items-center h-96 gap-6">
                 <div className={`animate-spin rounded-full h-20 w-20 border-t-4 border-r-4 border-slate-800`} style={{ borderTopColor: theme.color }}></div>
                 <p className="font-black text-slate-500 uppercase tracking-[0.5em] text-xs">Desenhando seu Destino...</p>
+            </div>
+          )}
+
+          {!isLoading && !result && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in py-10">
+               <WelcomeCard 
+                themeColor={theme.text}
+                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                title="Poder do Tempo"
+                description="Descubra como o tempo multiplica seu esforço através dos juros compostos."
+               />
+               <WelcomeCard 
+                themeColor={theme.text}
+                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+                title="Clareza de Metas"
+                description="Simule cenários reais e saiba exatamente quanto falta para sua independência."
+               />
+               <WelcomeCard 
+                themeColor={theme.text}
+                icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>}
+                title="Dicas de IA"
+                description="Nossa inteligência artificial analisa sua projeção e sugere os melhores caminhos."
+               />
             </div>
           )}
 
